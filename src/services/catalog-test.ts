@@ -1,4 +1,4 @@
-import { feNichePackages, allNichePackages } from '../data/niches';
+import { feNichePackages, allNichePackages } from '../data/niches.ts';
 
 export interface CatalogVerificationReport {
   allPassed: boolean;
