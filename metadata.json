@@ -1,0 +1,6 @@
+{
+  "name": "Authority Studio AI",
+  "description": "Turnkey AI business platform powered by Gemini Flash AI and interactive smart tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

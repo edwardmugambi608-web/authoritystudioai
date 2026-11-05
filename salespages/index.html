@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authority Studio AI &bull; Turnkey AI Business Property Builder</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    
+    /* Liquid Sheen Animation for Buy Buttons */
+    @keyframes sheen {
+      0% { transform: translateX(-150%) skewX(-20deg); }
+      50%, 100% { transform: translateX(200%) skewX(-20deg); }
+    }
+    .btn-sheen {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-sheen::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+      animation: sheen 3.5s infinite ease-in-out;
+    }
+
+    /* Subtle Floating Levitation */
+    @keyframes levitate {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .mockup-levitate {
+      animation: levitate 5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
+
+  <!-- 1. Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-blue-700 via-indigo-600 to-blue-700 text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center border-b border-blue-500/30 sticky top-0 z-50 shadow-md">
+    <div class="max-w-6xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="uppercase tracking-wider font-mono text-[11px] bg-white/20 px-2 py-0.5 rounded">Launch Special</span>
+      <span>Early-Bird Discount Active &bull; Regular Price Jumps to $97 at Launch Close!</span>
+    </div>
+  </div>
+
+  <!-- 2. Hero Section (Above the Fold) -->
+  <header class="relative pt-12 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden bg-radial from-slate-900 via-slate-950 to-slate-950 border-b border-slate-800/80">
+    <!-- Ambient Blue Glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+      
+      <!-- Logo Branding Lockup -->
+      <div class="flex items-center justify-center gap-3 mb-2">
+        <img src="assets/logo-icon.png" alt="Authority Studio Emblem" class="w-12 h-12 sm:w-14 sm:h-14 object-contain drop-shadow-md">
+        <img src="assets/logo-text.png" alt="Authority Studio AI" class="h-8 sm:h-9 w-auto object-contain drop-shadow-md">
+      </div>
+
+      <!-- Attention Pre-head Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-900/50 border border-blue-500/40 text-blue-300 text-xs sm:text-sm font-semibold tracking-wide">
+        <span class="text-amber-400 font-bold">ATTENTION:</span> Affiliates, Creators, Agencies &amp; Solopreneurs
+      </div>
+
+      <!-- Main Direct-Response Headline -->
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+        Deploy Complete, High-RPM <span class="bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">Authority Business Properties</span> in 60 Seconds
+      </h1>
+
+      <!-- High-Impact Sub-Headline -->
+      <p class="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+        Pre-loaded with <strong class="text-white">75 Curated Niches</strong>, Embedded <strong class="text-white">AI Micro-Tools &amp; Calculators</strong>, High-Converting Lead Magnets, and 1-Click <strong class="text-white">Business-in-a-Box ZIP Export</strong>!
+      </p>
+
+      <!-- Key Value Proof Bullets -->
+      <div class="flex flex-wrap justify-center gap-y-2 gap-x-6 text-xs sm:text-sm font-medium text-slate-300 pt-2">
+        <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Zero Coding or Technical Headaches</span>
+        <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> No Expensive Monthly Subscriptions</span>
+        <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> Real Interactive Assets Visitors Actually Use</span>
+        <span class="flex items-center gap-1.5"><span class="text-emerald-400">✓</span> 30-Day 100% Money-Back Guarantee</span>
+      </div>
+
+      <!-- Top High-Converting Buy Button -->
+      <div class="pt-6 max-w-md mx-auto">
+        <a href="#pricing-section" class="btn-sheen block w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-lg sm:text-xl uppercase tracking-wider shadow-lg shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 text-center">
+          Get Instant Access for Just $4.95 &rarr;
+        </a>
+        <div class="flex items-center justify-center gap-4 text-[11px] text-slate-400 mt-3 font-medium">
+          <span>🔒 256-Bit SSL Encrypted</span>
+          <span>&bull;</span>
+          <span>⚡ Instant Digital Access</span>
+          <span>&bull;</span>
+          <span>🛡️ 30-Day Guarantee</span>
+        </div>
+      </div>
+
+      <!-- App Hero Showcase Mockup -->
+      <div class="pt-10 max-w-4xl mx-auto">
+        <div class="mockup-levitate rounded-2xl p-2 sm:p-3 bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 border border-slate-700 shadow-2xl shadow-blue-900/30">
+          <!-- Browser Title Bar -->
+          <div class="flex items-center justify-between px-3 py-2 bg-slate-900 rounded-t-xl border-b border-slate-800 text-xs text-slate-400">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+            </div>
+            <div class="text-[11px] font-mono text-slate-300 bg-slate-800/80 px-4 py-0.5 rounded-md flex items-center gap-1">
+              <span>https://app.authoritystudio.ai/workspace/overview</span>
+            </div>
+            <span class="text-[10px] font-mono text-emerald-400 font-bold">● SYSTEM READY</span>
+          </div>
+          <!-- Real App Screenshot Frame -->
+          <div class="relative overflow-hidden rounded-b-xl bg-slate-950 aspect-video">
+            <img src="assets/Screenshot_20261104-094129_f929f1b8.png" alt="Authority Studio AI Live Platform Interface" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <p class="text-xs text-slate-400 mt-3 italic">
+          Actual unedited interface of Authority Studio AI running the Executive Dashboard &amp; Website Generator.
+        </p>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 3. The Agitation Section (Why Old Ways Fail) -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-900 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-rose-400 bg-rose-950/60 border border-rose-800/60 px-3 py-1 rounded-full">
+          The Cold Hard Truth of 2026
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Why 98% of "Generic AI Websites" Are Getting Ignored &amp; De-Indexed
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300 leading-relaxed">
+        <div class="p-6 bg-slate-950/70 border border-slate-800 rounded-2xl space-y-3">
+          <div class="text-rose-400 font-bold text-base flex items-center gap-2">
+            <span>❌</span> Thin AI Blog Spinners Are Dead
+          </div>
+          <p>
+            Spitting out 500-word generic ChatGPT articles onto an empty WordPress theme does not build a business. Visitors leave within 4 seconds because there is zero utility, zero interactivity, and zero real authority.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-950/70 border border-slate-800 rounded-2xl space-y-3">
+          <div class="text-rose-400 font-bold text-base flex items-center gap-2">
+            <span>❌</span> Freelancers Cost an Arm and a Leg
+          </div>
+          <p>
+            Hiring custom developers to code interactive calculators costs $800+. Copywriters demand $300 for lead magnets. Web designers charge $1,500 just to set up a brand layout. It drains your budget before you ever launch.
+          </p>
+        </div>
+      </div>
+
+      <!-- The Big Solution Pivot -->
+      <div class="p-8 rounded-2xl bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-blue-900/40 border border-blue-500/40 text-center space-y-3">
+        <h3 class="text-xl sm:text-2xl font-bold text-white">
+          The Solution: Deliver REAL Utility Visitors Return To Every Single Day
+        </h3>
+        <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base">
+          Authority Studio AI combines <strong>interactive micro-tools, financial calculators, high-RPM niche blueprints, and lead magnets</strong> into a ready-to-deploy, professional digital property you own 100%.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. The 3-Step Simple Launch Workflow -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-950 border-b border-slate-800">
+    <div class="max-w-5xl mx-auto space-y-12">
+      
+      <div class="text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 bg-blue-950/60 border border-blue-800/60 px-3 py-1 rounded-full">
+          Point &bull; Click &bull; Deploy
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          How Authority Studio AI Builds Your Business In 3 Simple Steps
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Step 1 Card -->
+        <div class="p-6 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-500/40 text-blue-400 font-mono font-bold text-xl flex items-center justify-center">
+            01
+          </div>
+          <h3 class="text-lg font-bold text-white">Select Your High-RPM Niche</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Choose from 75 curated, pre-researched high-ticket niches across Health, Wealth, AI, SaaS, Real Estate, and Green Energy. Every niche includes target audience personas, tone, and core pain points.
+          </p>
+        </div>
+
+        <!-- Step 2 Card -->
+        <div class="p-6 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 font-mono font-bold text-xl flex items-center justify-center">
+            02
+          </div>
+          <h3 class="text-lg font-bold text-white">Generate Live Website &amp; Tools</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            The deterministic engine builds your live website preview, complete with customized interactive calculators, assessment widgets, lead capture funnels, and monetized authority articles.
+          </p>
+        </div>
+
+        <!-- Step 3 Card -->
+        <div class="p-6 bg-slate-900/90 border border-slate-800 rounded-2xl space-y-4 hover:border-blue-500/50 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 font-mono font-bold text-xl flex items-center justify-center">
+            03
+          </div>
+          <h3 class="text-lg font-bold text-white">1-Click Business-in-a-Box ZIP</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Export a complete, self-contained ZIP bundle with all HTML, styles, scripts, calculators, and documentation. Deploy it to Netlify, Vercel, Firebase, cPanel, or host it anywhere with zero restrictions.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. Feature Deep Dive with Real App Screenshots -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-900 border-b border-slate-800">
+    <div class="max-w-5xl mx-auto space-y-16">
+      
+      <div class="text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full">
+          Inside The Engine
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Everything Included In Your Authority Studio AI Front-End License
+        </h2>
+      </div>
+
+      <!-- Feature Spotlight 1: Niche Hub -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4">
+          <div class="inline-flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-blue-400 bg-blue-950 px-2.5 py-1 rounded-md border border-blue-800/60">
+            Feature Module #1
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            75 Curated High-RPM Niche Market Selection Hub
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Stop guessing what markets convert. Get instant access to 75 deeply researched niches—from <em>Biohacking &amp; Longevity</em> to <em>B2B AI Automation</em>, <em>Solar Energy ROI</em>, and <em>Commercial Real Estate Syndication</em>.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Pre-built audience persona and core pain point profiles</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Tailored brand kits: colors, typography, and logo wordmarks</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Niche monetization models (Affiliate, SaaS, Lead Gen, Vaults)</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-slate-700 bg-slate-950 shadow-xl">
+          <img src="assets/Screenshot_20261104-094020_94c0a5b4.png" alt="Authority Studio Niche Selection Hub" class="w-full h-auto object-cover">
+        </div>
+      </div>
+
+      <!-- Feature Spotlight 2: Interactive AI Tools -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center lg:flex-row-reverse">
+        <div class="rounded-2xl overflow-hidden border border-slate-700 bg-slate-950 shadow-xl lg:order-2">
+          <img src="assets/Screenshot_20261104-094129_f929f1b8.png" alt="Interactive AI Micro Tools & Live Preview" class="w-full h-auto object-cover">
+        </div>
+        <div class="space-y-4 lg:order-1">
+          <div class="inline-flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-indigo-400 bg-indigo-950 px-2.5 py-1 rounded-md border border-indigo-800/60">
+            Feature Module #2
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Embedded Interactive AI Micro-Tools &amp; Calculators
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Static articles don't convert like interactive tools do. Authority Studio embeds responsive ROI calculators, diagnostic quizzes, and assessment widgets directly into your generated authority sites.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Generates sticky engagement that drives bookmarking and repeat visits</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Naturally captures leads by gating advanced calculator results</li>
+            <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Pre-configured with deterministic formulas aligned with industry standards</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature Spotlight 3: Business in a Box ZIP -->
+      <div class="p-8 rounded-2xl bg-slate-950 border border-slate-800 space-y-6">
+        <div class="max-w-3xl space-y-3">
+          <div class="inline-flex items-center gap-1.5 text-xs font-bold font-mono uppercase tracking-wider text-emerald-400 bg-emerald-950 px-2.5 py-1 rounded-md border border-emerald-800/60">
+            Feature Module #3
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            1-Click Turnkey "Business-in-a-Box" ZIP Exporter
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            You are never locked into our servers. Click one button and download a clean, structured ZIP file containing the full website HTML, CSS styling, interactive tool scripts, authority guides, and lead capture templates.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center font-mono text-xs">
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <div class="text-blue-400 font-bold text-base mb-1">index.html</div>
+            <div class="text-slate-400 text-[10px]">Complete Website</div>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <div class="text-indigo-400 font-bold text-base mb-1">tools.html</div>
+            <div class="text-slate-400 text-[10px]">AI Calculators</div>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <div class="text-emerald-400 font-bold text-base mb-1">guides/</div>
+            <div class="text-slate-400 text-[10px]">Authority Articles</div>
+          </div>
+          <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+            <div class="text-amber-400 font-bold text-base mb-1">assets/</div>
+            <div class="text-slate-400 text-[10px]">Brand Kits &amp; Logos</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 6. Cost Comparison Matrix -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-950 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-3">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          How Authority Studio AI Saves You Thousands
+        </h2>
+        <p class="text-slate-400 text-sm max-w-xl mx-auto">
+          Look at what it traditionally costs to build just ONE authority digital property:
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm border-collapse bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+          <thead>
+            <tr class="bg-slate-800/80 text-xs font-mono uppercase text-slate-300">
+              <th class="p-4">Component Needed</th>
+              <th class="p-4 text-rose-400">Traditional Freelancer Cost</th>
+              <th class="p-4 text-emerald-400 font-bold">With Authority Studio AI</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 text-slate-300">
+            <tr>
+              <td class="p-4 font-semibold text-white">Niche &amp; Audience Research</td>
+              <td class="p-4 text-slate-400">$350+ (Manual or Upwork)</td>
+              <td class="p-4 text-emerald-400 font-semibold">Included (75 Pre-Loaded Niches)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-white">Interactive Calculator Coding</td>
+              <td class="p-4 text-slate-400">$600 - $1,200 (Software Dev)</td>
+              <td class="p-4 text-emerald-400 font-semibold">Included (Turnkey Embedded Widgets)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-white">Authority Content &amp; Lead Magnet</td>
+              <td class="p-4 text-slate-400">$250 (Freelance Writer)</td>
+              <td class="p-4 text-emerald-400 font-semibold">Included (Pre-Formatted Guides)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-semibold text-white">Brand Design &amp; Layout</td>
+              <td class="p-4 text-slate-400">$400 (Web Designer)</td>
+              <td class="p-4 text-emerald-400 font-semibold">Included (Deterministic CSS Engine)</td>
+            </tr>
+            <tr class="bg-blue-950/40 font-bold">
+              <td class="p-4 text-white">Total Investment</td>
+              <td class="p-4 text-rose-400 font-mono text-base">$1,600+ Per Property</td>
+              <td class="p-4 text-emerald-400 font-mono text-lg font-black">Just $4.95 One-Time!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. Fast-Action Launch Bonuses -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-900 border-b border-slate-800">
+    <div class="max-w-5xl mx-auto space-y-10">
+      
+      <div class="text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/60 px-3 py-1 rounded-full">
+          Fast-Action Action Takers Only
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          3 Exclusive Launch Bonuses Included When You Order Today
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Bonus 1 -->
+        <div class="p-6 bg-slate-950 border border-slate-800 rounded-2xl space-y-3 relative overflow-hidden">
+          <div class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+            Bonus #1 &bull; Retail: $197
+          </div>
+          <h3 class="text-lg font-bold text-white">High-RPM Monetization Playbook</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Our step-by-step master breakdown on routing affiliate offers, high-ticket commissions, and SaaS lead generation through your interactive authority tools.
+          </p>
+        </div>
+
+        <!-- Bonus 2 -->
+        <div class="p-6 bg-slate-950 border border-slate-800 rounded-2xl space-y-3 relative overflow-hidden">
+          <div class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+            Bonus #2 &bull; Retail: $297
+          </div>
+          <h3 class="text-lg font-bold text-white">Zero-Cost Authority Traffic Secrets</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Discover the exact strategies to get organic search traffic, social bookmarks, and referral visitors to your interactive tools without paid advertising.
+          </p>
+        </div>
+
+        <!-- Bonus 3 -->
+        <div class="p-6 bg-slate-950 border border-slate-800 rounded-2xl space-y-3 relative overflow-hidden">
+          <div class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+            Bonus #3 &bull; Retail: $197
+          </div>
+          <h3 class="text-lg font-bold text-white">Agency Client Onboarding Swipe Kit</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Plug-and-play email sequences, proposal templates, and client delivery agreements to sell turnkey authority property setups to local business owners.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 8. Complete Value Stack & Pricing Section -->
+  <section id="pricing-section" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950 border-b border-slate-800 scroll-mt-12">
+    <div class="max-w-3xl mx-auto">
+      
+      <!-- Value Stack Card -->
+      <div class="rounded-3xl p-8 sm:p-12 bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-blue-500/60 shadow-2xl shadow-blue-900/40 space-y-8">
+        
+        <div class="text-center space-y-2">
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 bg-blue-950 px-3 py-1 rounded-full border border-blue-800">
+            Complete Front-End Access
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white">
+            Everything You Get Today With Authority Studio AI
+          </h2>
+        </div>
+
+        <!-- The Value Stack Checklist -->
+        <div class="space-y-3 text-sm text-slate-200 divide-y divide-slate-800/80">
+          <div class="flex items-center justify-between pt-2">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Full Core Authority Studio AI Platform Access</span>
+            <span class="font-mono text-slate-400 text-xs">$497 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 75 Curated High-RPM Niche Market Profiles</span>
+            <span class="font-mono text-slate-400 text-xs">$297 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Embedded Interactive AI Micro-Tools &amp; Calculators</span>
+            <span class="font-mono text-slate-400 text-xs">$397 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 1-Click Live Website Generator &amp; Responsive Preview</span>
+            <span class="font-mono text-slate-400 text-xs">$297 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Turnkey Business-in-a-Box ZIP Exporter Engine</span>
+            <span class="font-mono text-slate-400 text-xs">$197 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Lead Magnet Capture Funnel &amp; Email Swipe Files</span>
+            <span class="font-mono text-slate-400 text-xs">$147 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Fast-Action Bonus #1: Monetization Playbook</span>
+            <span class="font-mono text-slate-400 text-xs">$197 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Fast-Action Bonus #2: Traffic Secrets Blueprint</span>
+            <span class="font-mono text-slate-400 text-xs">$297 Value</span>
+          </div>
+          <div class="flex items-center justify-between pt-3">
+            <span class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Fast-Action Bonus #3: Agency Client Onboarding Kit</span>
+            <span class="font-mono text-slate-400 text-xs">$197 Value</span>
+          </div>
+        </div>
+
+        <!-- Total Real World Value Anchor -->
+        <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center space-y-1">
+          <div class="text-xs text-slate-400 uppercase font-mono tracking-wider">Total Real-World Value</div>
+          <div class="text-2xl font-black text-slate-400 line-through">$2,425.00</div>
+        </div>
+
+        <!-- Price Reveal Box -->
+        <div class="text-center space-y-2">
+          <div class="text-xs uppercase font-mono font-bold text-emerald-400 tracking-wider">
+            Special Launch Week Pricing:
+          </div>
+          <div class="text-5xl sm:text-6xl font-black text-white tracking-tight">
+            $4.95
+          </div>
+          <div class="text-xs text-slate-400">
+            Strictly One-Time Payment &bull; Zero Recurring Fees During Launch
+          </div>
+        </div>
+
+        <!-- Primary Buy Button -->
+        <div>
+          <!-- WarriorPlus Buy Button Link Placeholder -->
+          <a href="https://warriorplus.com/buy/sample" class="btn-sheen block w-full py-5 px-8 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-xl sm:text-2xl uppercase tracking-wider shadow-xl shadow-amber-500/30 transition-all text-center">
+            Click Here For Instant Access Now &rarr;
+          </a>
+
+          <!-- Payment Security Icons -->
+          <div class="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400 mt-4 font-medium">
+            <span class="px-2 py-1 bg-slate-800 rounded font-mono text-[10px]">VISA</span>
+            <span class="px-2 py-1 bg-slate-800 rounded font-mono text-[10px]">MASTERCARD</span>
+            <span class="px-2 py-1 bg-slate-800 rounded font-mono text-[10px]">AMEX</span>
+            <span class="px-2 py-1 bg-slate-800 rounded font-mono text-[10px]">PAYPAL</span>
+            <span class="px-2 py-1 bg-slate-800 rounded font-mono text-[10px]">DISCOVER</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 9. 30-Day Money-Back Guarantee Seal -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-900 border-b border-slate-800">
+    <div class="max-w-3xl mx-auto p-8 rounded-3xl bg-slate-950 border border-amber-500/40 flex flex-col sm:flex-row items-center gap-6">
+      <div class="w-24 h-24 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 flex items-center justify-center font-bold text-4xl shrink-0 shadow-lg shadow-amber-500/20">
+        🛡️
+      </div>
+      <div class="space-y-2 text-center sm:text-left">
+        <h3 class="text-xl sm:text-2xl font-black text-white">
+          Our 30-Day "Ironclad 100% Satisfaction" Guarantee
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+          Test drive Authority Studio AI for 30 full days completely at our risk. Select your niches, preview your properties, test the embedded AI calculators, and export the Business-in-a-Box ZIP packages. If you are not completely thrilled, just contact our support desk for a full, prompt 100% refund. No questions asked.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Frequently Asked Questions (FAQ) -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-950 border-b border-slate-800">
+    <div class="max-w-4xl mx-auto space-y-8">
+      
+      <div class="text-center space-y-3">
+        <span class="text-xs font-mono font-bold uppercase tracking-wider text-blue-400 bg-blue-950/60 border border-blue-800/60 px-3 py-1 rounded-full">
+          Got Questions?
+        </span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+          Frequently Answered Questions
+        </h2>
+      </div>
+
+      <div class="space-y-4 text-sm text-slate-300">
+        
+        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white text-base">Do I need coding or design skills to use this?</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            None whatsoever. Authority Studio AI is completely turnkey. You select your niche from the curated library of 75 verticals, and the engine automatically configures branding, color schemes, interactive calculators, and authority content.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white text-base">Are there any monthly fees?</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            During this special launch window, you get full core access to Authority Studio AI for a strictly one-time fee of just $4.95. There are zero recurring subscription charges on the Front-End.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white text-base">Where can I host my generated authority websites?</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Anywhere! When you click "Export Business in a Box ZIP", you receive standard, clean HTML, CSS, and JavaScript files. You can upload them to Netlify, Vercel, Firebase Hosting, GitHub Pages, or any standard cPanel web hosting account.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white text-base">How do the embedded interactive AI tools work?</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Each niche includes customized micro-tools (such as financial return calculators, diagnostic quizzes, and assessment engines) that run client-side. Visitors interact with them to get immediate numbers and benchmarks, driving sticky engagement and email opt-ins.
+          </p>
+        </div>
+
+        <div class="p-6 bg-slate-900 rounded-2xl border border-slate-800 space-y-2">
+          <h4 class="font-bold text-white text-base">How do I access my purchase?</h4>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Instant digital delivery! Immediately after completing checkout on WarriorPlus, you will be redirected to the members' area and your login credentials will be emailed to your PayPal or WarriorPlus buyer address.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 11. The "Fork in the Road" Decision Close & Triple P.S. -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-900 border-b border-slate-800">
+    <div class="max-w-3xl mx-auto space-y-8">
+      
+      <div class="space-y-4 text-center">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          You Stand At A Fork In The Road Today
+        </h2>
+        <p class="text-sm text-slate-300 leading-relaxed max-w-xl mx-auto">
+          You have two distinct paths in front of you:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-300">
+        <div class="p-6 bg-slate-950 rounded-2xl border border-slate-800 space-y-3">
+          <h4 class="font-bold text-rose-400 text-base">Path A: Do Nothing</h4>
+          <p class="leading-relaxed">
+            Keep trying to manually write content, fight with WordPress themes, spend hundreds on freelancers, and stay stuck with zero traffic and zero authority properties.
+          </p>
+        </div>
+        <div class="p-6 bg-slate-950 rounded-2xl border border-blue-500/50 space-y-3">
+          <h4 class="font-bold text-emerald-400 text-base">Path B: Risk Nothing For 30 Days</h4>
+          <p class="leading-relaxed">
+            Grab Authority Studio AI for less than a sandwich, unlock 75 proven niches, and deploy complete interactive authority properties in minutes with our 100% money-back guarantee.
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Buy Button Anchor -->
+      <div class="pt-4 max-w-md mx-auto text-center">
+        <a href="#pricing-section" class="btn-sheen block w-full py-4 px-8 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 font-black text-lg uppercase tracking-wider shadow-lg shadow-amber-500/25 transition-all text-center">
+          Claim Your License For Just $4.95 &rarr;
+        </a>
+      </div>
+
+      <!-- Triple P.S. Stack -->
+      <div class="pt-8 border-t border-slate-800 text-xs sm:text-sm text-slate-400 space-y-3">
+        <p>
+          <strong class="text-white">P.S.</strong> Remember, Authority Studio AI gives you 75 pre-researched high-RPM niches, live website generator, interactive AI micro-tools, and 1-click Business-in-a-Box ZIP export.
+        </p>
+        <p>
+          <strong class="text-white">P.P.S.</strong> The $4.95 pricing is strictly an early-bird launch promotion. Once the countdown expires, this license shifts to the standard $97 retail tier.
+        </p>
+        <p>
+          <strong class="text-white">P.P.P.S.</strong> You have zero risk with our 30-Day 100% Money-Back Guarantee. Click above to grab your copy now!
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 12. Mandatory WarriorPlus Compliance & Legal Footer -->
+  <footer class="bg-slate-950 text-slate-400 py-12 px-6 border-t border-slate-800 text-xs text-center space-y-6">
+    <div class="max-w-4xl mx-auto space-y-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center justify-center gap-2 opacity-80">
+        <img src="assets/logo-icon.png" alt="Authority Studio Emblem" class="w-8 h-8 object-contain">
+        <img src="assets/logo-text.png" alt="Authority Studio AI" class="h-5 w-auto object-contain">
+      </div>
+
+      <!-- Legal Links -->
+      <div class="flex flex-wrap justify-center gap-4 text-slate-300 font-medium">
+        <a href="index.html" class="hover:text-white transition-colors">Home Offer</a>
+        <span>&bull;</span>
+        <a href="tos.html" class="hover:text-white transition-colors">Terms of Service</a>
+        <span>&bull;</span>
+        <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+        <span>&bull;</span>
+        <a href="disclaimer.html" class="hover:text-white transition-colors">Earnings Disclaimer</a>
+        <span>&bull;</span>
+        <a href="refund.html" class="hover:text-white transition-colors">Refund Policy</a>
+        <span>&bull;</span>
+        <a href="support.html" class="hover:text-white transition-colors">Customer Support</a>
+        <span>&bull;</span>
+        <a href="affiliate.html" class="text-blue-400 hover:text-blue-300 font-bold transition-colors">Affiliate / JV Program</a>
+      </div>
+
+      <!-- Mandatory W+ Statutory Platform Statement -->
+      <p class="text-[11px] text-slate-500 max-w-3xl mx-auto leading-relaxed">
+        WarriorPlus is used to help facilitate the sale of this product. WarriorPlus is not a vendor or creator of this product. WarriorPlus does not endorse, review, or evaluate this product, nor any claim, statement, or opinion made by the vendor.
+      </p>
+
+      <p class="text-[11px] text-slate-500">
+        &copy; 2026 Authority Studio AI. All Rights Reserved.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
