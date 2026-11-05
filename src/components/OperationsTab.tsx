@@ -32,7 +32,7 @@ import { generateStandaloneWebsiteHtml } from '../services/export-service';
 import confetti from 'canvas-confetti';
 
 interface OperationsTabProps {
-  workspace: BusinessWorkspace;
+  workspace?: BusinessWorkspace | null;
   currentPlan: ProductTier;
   onNavigateTab?: (tab: string) => void;
   onNavigateToContent?: (slug: string) => void;
@@ -46,7 +46,55 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   onNavigateToContent,
   onNavigateToTool
 }) => {
-  const [customDomainInput, setCustomDomainInput] = useState(workspace.customDomain || '');
+  const fallbackWs: BusinessWorkspace = {
+    id: 'ws-builder-ops',
+    name: 'Builder Cloud Operations',
+    nichePackageId: 'high-ticket-consulting',
+    brandProfile: {
+      name: 'Authority Media Lab',
+      tagline: 'High-Ticket Client Acquisition & Interactive Decision Systems',
+      mission: 'Empowering B2B operators with verifiable calculation assets.',
+      primaryColor: '#2563eb',
+      secondaryColor: '#1e40af',
+      accentColor: '#f59e0b',
+      fontHeading: 'Inter',
+      fontBody: 'Inter',
+      logoText: 'Authority Media Lab'
+    },
+    audienceProfile: {
+      targetPersona: 'Enterprise Directors & B2B Consultants',
+      corePainPoints: ['High client acquisition costs', 'Generic content fatigue'],
+      primaryDesires: ['Scalable client acquisition', 'Predictable pipeline'],
+      objections: ['Requires high engineering overhead'],
+      toneAndVoice: 'Authoritative, analytical, pragmatic'
+    },
+    publishedUrl: 'authority-media.authoritystudio.app',
+    isPublished: true,
+    tools: [
+      { id: 'tool-1', name: 'ROI Decision Engine', type: 'calculator', isPaidAccess: true, price: 19 } as any
+    ],
+    contentAssets: [
+      {
+        id: 'art-1',
+        blueprintId: 'bp-1',
+        nicheId: 'high-ticket-consulting',
+        type: 'guide',
+        title: 'The 2026 High-Ticket Client Acquisition Blueprint',
+        slug: 'high-ticket-client-acquisition',
+        category: 'Client Acquisition',
+        readingTimeMinutes: 7,
+        excerpt: 'A comprehensive trade audit analyzing how top-tier boutique agencies replace cold outreach with automated interactive decision engines.',
+        body: 'Complete implementation blueprint for high-ticket authority properties.',
+        status: 'published',
+        targetKeyword: 'High-Ticket Client Acquisition',
+        metaDescription: 'Verified agency acquisition models and interactive calculation funnels.',
+        updatedAt: new Date().toISOString()
+      }
+    ]
+  } as any;
+
+  const effectiveWorkspace = workspace || store.getActiveWorkspace() || store.getWorkspaces()[0] || fallbackWs;
+  const [customDomainInput, setCustomDomainInput] = useState(effectiveWorkspace.customDomain || '');
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishMessage, setPublishMessage] = useState<string | null>(null);
   const [copiedUrl, setCopiedUrl] = useState(false);
@@ -95,9 +143,9 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   });
 
   const entitlement = PRODUCT_CONFIGS[currentPlan] || PRODUCT_CONFIGS.CORE;
-  const canonicalUrl = workspace.publishedUrl 
-    ? `https://${workspace.publishedUrl}`
-    : `https://${workspace.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.authoritystudio.app`;
+  const canonicalUrl = effectiveWorkspace.publishedUrl 
+    ? `https://${effectiveWorkspace.publishedUrl}`
+    : `https://${effectiveWorkspace.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.authoritystudio.app`;
 
   const handleCopyCanonicalUrl = () => {
     navigator.clipboard.writeText(canonicalUrl);
@@ -114,12 +162,12 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   };
 
   const handleDownloadStandaloneHtml = () => {
-    const html = generateStandaloneWebsiteHtml(workspace);
+    const html = generateStandaloneWebsiteHtml(effectiveWorkspace);
     const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${workspace.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-production-website.html`;
+    a.download = `${effectiveWorkspace.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-production-website.html`;
     a.click();
     URL.revokeObjectURL(url);
     confetti({ particleCount: 40, spread: 50 });
@@ -128,7 +176,7 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   const handleRunSeoAudit = async () => {
     setIsAuditingSeo(true);
     try {
-      const firstArticle = workspace.contentAssets[0];
+      const firstArticle = effectiveWorkspace.contentAssets[0];
       const res = await fetch('/api/gemini/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -137,15 +185,15 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
           title: firstArticle?.title || 'Authority Benchmark Guide',
           body: firstArticle?.body || 'Content body...',
           businessContext: {
-            niche: workspace.nichePackageId,
-            brandName: workspace.brandProfile.name
+            niche: effectiveWorkspace.nichePackageId,
+            brandName: effectiveWorkspace.brandProfile.name
           }
         })
       });
       const data = await res.json();
       setSeoHealthAudited(true);
       if (data.report?.refreshedBody && firstArticle) {
-        store.updateContentAssetBody(workspace.id, firstArticle.id, data.report.refreshedBody, true);
+        store.updateContentAssetBody(effectiveWorkspace.id, firstArticle.id, data.report.refreshedBody, true);
       }
       confetti({ particleCount: 60, spread: 60 });
       setRefreshSuccess(`All 40 articles scanned! Injected Q1 2026 trade indices and schema markup into "${firstArticle?.title || 'Cornerstone Guide'}".`);
@@ -180,18 +228,18 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   const handlePublish = () => {
     setIsPublishing(true);
     setTimeout(() => {
-      const res = store.publishWorkspace(workspace.id, customDomainInput.trim() || undefined);
+      const res = store.publishWorkspace(effectiveWorkspace.id, customDomainInput.trim() || undefined);
       setIsPublishing(false);
       if (res.success) {
         confetti({ particleCount: 75, spread: 65, origin: { y: 0.6 } });
-        setPublishMessage(`Successfully deployed to ${workspace.publishedUrl || canonicalUrl}!`);
+        setPublishMessage(`Successfully deployed to ${effectiveWorkspace.publishedUrl || canonicalUrl}!`);
         setTimeout(() => setPublishMessage(null), 5000);
       }
     }, 800);
   };
 
   const handleUnpublish = () => {
-    store.unpublishWorkspace(workspace.id);
+    store.unpublishWorkspace(effectiveWorkspace.id);
     setPublishMessage('Property unpublished and returned to private staging mode.');
     setTimeout(() => setPublishMessage(null), 4000);
   };
@@ -199,7 +247,7 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
   const handleSimulatePayment = () => {
     const key = `AUTH-ENG-${Math.random().toString(36).substring(2, 8).toUpperCase()}-${Date.now().toString(36).toUpperCase()}`;
     setGeneratedLicenseKey(key);
-    store.addOrder(workspace.id, 'customer@example.com', 'Decision Engine Pro Lifetime Pass', licensePriceInput, false);
+    store.addOrder(effectiveWorkspace.id, 'customer@example.com', 'Decision Engine Pro Lifetime Pass', licensePriceInput, false);
     confetti({ particleCount: 70, spread: 60 });
     setSimulatedCheckoutSuccess(`Received payment of ${currencySymbols[activeCurrency]}${Math.round(licensePriceInput * currencyRates[activeCurrency])}! Automated license key provisioned.`);
     setTimeout(() => setSimulatedCheckoutSuccess(null), 5000);
@@ -210,7 +258,7 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
     confetti({ particleCount: 35, spread: 40 });
   };
 
-  const firstArticle = workspace.contentAssets[0];
+  const firstArticle = effectiveWorkspace.contentAssets[0];
 
   return (
     <div className="space-y-6">
@@ -240,7 +288,7 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          {workspace.isPublished ? (
+          {effectiveWorkspace.isPublished ? (
             <button 
               onClick={handleUnpublish}
               className="px-4 py-2.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors border border-rose-200 cursor-pointer"
@@ -271,7 +319,7 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
       {/* 🌟 ACTION-TO-RESULT HUB: Deployment Station & Location Navigator */}
       {/* ========================================================================= */}
       <div className={`rounded-3xl border p-6 shadow-sm transition-all ${
-        workspace.isPublished 
+        effectiveWorkspace.isPublished 
           ? 'bg-gradient-to-br from-emerald-900 via-slate-900 to-indigo-950 text-white border-emerald-500/40 shadow-emerald-950/20'
           : 'bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 text-white border-slate-700'
       }`}>
@@ -279,33 +327,33 @@ export const OperationsTab: React.FC<OperationsTabProps> = ({
           <div className="space-y-1.5">
             <div className="flex items-center gap-2.5">
               <span className={`inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full border ${
-                workspace.isPublished
+                effectiveWorkspace.isPublished
                   ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40 animate-pulse'
                   : 'bg-amber-500/20 text-amber-300 border-amber-400/40'
               }`}>
-                <span className={`w-2 h-2 rounded-full ${workspace.isPublished ? 'bg-emerald-400' : 'bg-amber-400'}`} />
-                {workspace.isPublished ? 'Live on Cloud Edge' : 'Private Staging Mode'}
+                <span className={`w-2 h-2 rounded-full ${effectiveWorkspace.isPublished ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+                {effectiveWorkspace.isPublished ? 'Live on Cloud Edge' : 'Private Staging Mode'}
               </span>
               <span className="text-[11px] text-slate-300 font-mono">
-                {workspace.isPublished ? '280+ Edge POPs • TLS 1.3 Active' : 'Ready to Launch'}
+                {effectiveWorkspace.isPublished ? '280+ Edge POPs • TLS 1.3 Active' : 'Ready to Launch'}
               </span>
             </div>
             
             <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white font-display">
-              {workspace.isPublished 
+              {effectiveWorkspace.isPublished 
                 ? 'Your Authority Property is Live to the World'
                 : 'Staging Center: Prepare Your Property for Public Launch'}
             </h2>
             
             <p className="text-xs text-slate-300 max-w-3xl leading-relaxed">
-              {workspace.isPublished
+              {effectiveWorkspace.isPublished
                 ? `Published at ${canonicalUrl}. All 11 pages, responsive styles, 8 micro-tools, and lead capture systems are operational.`
                 : 'Your property is currently rendered inside the staging container. Publishing maps your 11 pages and decision engines to the global CDN.'}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-            {workspace.isPublished ? (
+            {effectiveWorkspace.isPublished ? (
               <>
                 <button
                   onClick={handleCopyCanonicalUrl}

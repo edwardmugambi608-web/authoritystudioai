@@ -85,7 +85,7 @@ export default function App() {
   const [repurposingModalOpen, setRepurposingModalOpen] = useState(false);
   const [repurposingAsset, setRepurposingAsset] = useState<ContentAsset | null>(null);
   const [portfolioOpenClone, setPortfolioOpenClone] = useState(false);
-  const [commercialSubSection, setCommercialSubSection] = useState<'clients' | 'license' | 'local_package' | 'event_package'>('clients');
+  const [commercialSubSection, setCommercialSubSection] = useState<'clients' | 'license' | 'proposals' | 'local_package' | 'event_package'>('clients');
 
   // Modals & Navigation state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -204,8 +204,9 @@ export default function App() {
       return;
     }
     if (tab === 'repurposing') {
-      if (activeWorkspace && activeWorkspace.contentAssets && activeWorkspace.contentAssets.length > 0) {
-        setRepurposingAsset(activeWorkspace.contentAssets[0]);
+      const targetAsset = activeWorkspace?.contentAssets?.[0] || store.getWorkspaces()[0]?.contentAssets?.[0] || null;
+      if (targetAsset) {
+        setRepurposingAsset(targetAsset);
       }
       setRepurposingModalOpen(true);
       return;
@@ -227,6 +228,10 @@ export default function App() {
     }
     if (tab === 'local_event') {
       setCommercialSubSection('local_package');
+      setActiveTab('commercial');
+      return;
+    }
+    if (tab === 'commercial') {
       setActiveTab('commercial');
       return;
     }
@@ -381,97 +386,98 @@ export default function App() {
           />
         )}
 
-        {activeTab !== 'niches' && activeTab !== 'dashboard' && activeTab !== 'admin' && activeTab !== 'guide' && activeWorkspace && (
+        {/* Independent OTO Tabs: Functional across full account portfolio without requiring active property selection */}
+        {activeTab === 'operations' && (
+          <OperationsTab
+            workspace={activeWorkspace}
+            currentPlan={currentPlan}
+            onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
+            onNavigateToContent={handleNavigateToContent}
+            onNavigateToTool={handleNavigateToTool}
+          />
+        )}
+
+        {activeTab === 'portfolio' && (
+          <PortfolioTab
+            currentPlan={currentPlan}
+            initialOpenClone={portfolioOpenClone}
+            onOpenCreateModal={() => setCreateModalOpen(true)}
+            onSelectWorkspace={() => {
+              setPortfolioOpenClone(false);
+              setActiveTab('dashboard');
+            }}
+          />
+        )}
+
+        {activeTab === 'commercial' && (
+          <CommercialTab
+            currentPlan={currentPlan}
+            activeWorkspace={activeWorkspace}
+            initialSubSection={commercialSubSection}
+          />
+        )}
+
+        {/* Property-Specific Tabs requiring an active business property */}
+        {activeWorkspace && (
           <>
+            {activeTab === 'launch_plan' && (
+              <LaunchPlanTab
+                workspace={activeWorkspace}
+                onNavigateTab={handleSelectTab}
+              />
+            )}
 
-              {activeTab === 'launch_plan' && (
-                <LaunchPlanTab
-                  workspace={activeWorkspace}
-                  onNavigateTab={handleSelectTab}
-                />
-              )}
+            {activeTab === 'website' && (
+              <WebsitePreviewTab
+                workspace={activeWorkspace}
+                onNavigateToTool={handleNavigateToTool}
+                onNavigateToContent={handleNavigateToContent}
+                onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
+              />
+            )}
 
-              {activeTab === 'website' && (
-                <WebsitePreviewTab
-                  workspace={activeWorkspace}
-                  onNavigateToTool={handleNavigateToTool}
-                  onNavigateToContent={handleNavigateToContent}
-                  onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
-                />
-              )}
+            {activeTab === 'tools' && (
+              <MicroToolsTab
+                workspace={activeWorkspace}
+                initialToolSlug={selectedToolSlug}
+                onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
+              />
+            )}
 
-              {activeTab === 'tools' && (
-                <MicroToolsTab
-                  workspace={activeWorkspace}
-                  initialToolSlug={selectedToolSlug}
-                  onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
-                />
-              )}
+            {activeTab === 'content' && (
+              <ContentLibraryTab
+                workspace={activeWorkspace}
+                initialAssetSlug={selectedAssetSlug}
+                onOpenRepurposing={(asset) => {
+                  setRepurposingAsset(asset);
+                  setRepurposingModalOpen(true);
+                }}
+                onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
+              />
+            )}
 
-              {activeTab === 'content' && (
-                <ContentLibraryTab
-                  workspace={activeWorkspace}
-                  initialAssetSlug={selectedAssetSlug}
-                  onOpenRepurposing={(asset) => {
-                    setRepurposingAsset(asset);
-                    setRepurposingModalOpen(true);
-                  }}
-                  onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
-                />
-              )}
+            {activeTab === 'lead_magnet' && (
+              <LeadMagnetTab
+                workspace={activeWorkspace}
+              />
+            )}
 
-              {activeTab === 'lead_magnet' && (
-                <LeadMagnetTab
-                  workspace={activeWorkspace}
-                />
-              )}
+            {activeTab === 'monetization' && (
+              <MonetizationTab
+                workspace={activeWorkspace}
+              />
+            )}
 
-              {activeTab === 'monetization' && (
-                <MonetizationTab
-                  workspace={activeWorkspace}
-                />
-              )}
+            {activeTab === 'exports' && (
+              <ExportsTab
+                workspace={activeWorkspace}
+              />
+            )}
+          </>
+        )}
 
-              {activeTab === 'exports' && (
-                <ExportsTab
-                  workspace={activeWorkspace}
-                />
-              )}
-
-              {activeTab === 'operations' && (
-                <OperationsTab
-                  workspace={activeWorkspace}
-                  currentPlan={currentPlan}
-                  onNavigateTab={(tab) => handleSelectTab(tab as TabKey)}
-                  onNavigateToContent={handleNavigateToContent}
-                  onNavigateToTool={handleNavigateToTool}
-                />
-              )}
-
-              {activeTab === 'portfolio' && (
-                <PortfolioTab
-                  currentPlan={currentPlan}
-                  initialOpenClone={portfolioOpenClone}
-                  onOpenCreateModal={() => setCreateModalOpen(true)}
-                  onSelectWorkspace={() => {
-                    setPortfolioOpenClone(false);
-                    setActiveTab('dashboard');
-                  }}
-                />
-              )}
-
-              {activeTab === 'commercial' && (
-                <CommercialTab
-                  currentPlan={currentPlan}
-                  activeWorkspace={activeWorkspace}
-                  initialSubSection={commercialSubSection}
-                />
-              )}
-            </>
-          )}
-
-        {/* Empty State Prompt when clicking property tabs before generating a business */}
-        {activeTab !== 'niches' && activeTab !== 'dashboard' && activeTab !== 'admin' && activeTab !== 'guide' && !activeWorkspace && (
+        {/* Empty State Prompt: ONLY shown for property-specific tabs when no business has been generated yet */}
+        {!activeWorkspace && ['launch_plan', 'website', 'tools', 'content', 'lead_magnet', 'monetization', 'exports'].includes(activeTab) && (
           <div className="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto space-y-5 shadow-xs my-8">
             <div className="w-16 h-16 rounded-3xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto shadow-inner">
               <Sparkles className="w-8 h-8 text-blue-600" />
@@ -567,15 +573,13 @@ export default function App() {
       />
 
       {/* 1-into-7 Traffic Repurposing Engine Modal */}
-      {activeWorkspace && activeWorkspace.contentAssets && activeWorkspace.contentAssets.length > 0 && (
-        <RepurposingModal
-          isOpen={repurposingModalOpen}
-          onClose={() => setRepurposingModalOpen(false)}
-          workspace={activeWorkspace}
-          asset={repurposingAsset || activeWorkspace.contentAssets[0]}
-          onOpenUpgradeWall={(tier, feat) => handleOpenUpgradeWall(tier, feat)}
-        />
-      )}
+      <RepurposingModal
+        isOpen={repurposingModalOpen}
+        onClose={() => setRepurposingModalOpen(false)}
+        workspace={activeWorkspace}
+        asset={repurposingAsset || activeWorkspace?.contentAssets?.[0] || null}
+        onOpenUpgradeWall={(tier, feat) => handleOpenUpgradeWall(tier, feat)}
+      />
 
     </div>
   );

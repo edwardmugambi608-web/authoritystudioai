@@ -23,8 +23,8 @@ import confetti from 'canvas-confetti';
 interface RepurposingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  workspace: BusinessWorkspace;
-  asset: ContentAsset;
+  workspace?: BusinessWorkspace | null;
+  asset?: ContentAsset | null;
   onOpenUpgradeWall: (tier: ProductTier, featureName: string) => void;
 }
 
@@ -40,6 +40,42 @@ export const RepurposingModal: React.FC<RepurposingModalProps> = ({
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const effectiveWorkspace = workspace || {
+    id: 'ws-demo',
+    nicheId: 'high-ticket-consulting',
+    brandProfile: {
+      name: 'Authority Media Lab',
+      tagline: 'High-Ticket Client Acquisition & Interactive Decision Systems',
+      primaryColor: '#2563eb',
+      accentColor: '#f59e0b'
+    },
+    audienceProfile: {
+      targetPersona: 'Enterprise Directors & B2B Consultants',
+      painPoints: ['High client acquisition costs', 'Generic content fatigue', 'Inconsistent pipeline'],
+      monetizationAngle: 'High-Ticket Retainers & Interactive Tool Paywalls'
+    },
+    publishedUrl: 'https://authoritystudio.app',
+    contentAssets: []
+  };
+
+  const effectiveAsset: ContentAsset = asset || (workspace?.contentAssets && workspace.contentAssets.length > 0 ? workspace.contentAssets[0] : {
+    id: 'repurpose-demo',
+    blueprintId: 'bp-demo',
+    nicheId: 'high-ticket-consulting',
+    type: 'guide',
+    slug: 'authority-scaling-framework',
+    status: 'published',
+    metaDescription: '7 Levers to High-Ticket Client Acquisition',
+    title: 'The 2026 Authority Scaling Framework: 7 Levers to High-Ticket Client Acquisition',
+    category: 'guide',
+    targetKeyword: 'B2B Client Acquisition & Interactive Funnels',
+    excerpt: 'A comprehensive trade audit analyzing how top-tier boutique agencies replace unpredictable cold outreach with automated interactive decision engines and verified benchmark calculators.',
+    body: 'Modern B2B decision-makers no longer respond to generic pitch decks. By embedding verifiable calculation tools, cost estimators, and ROI audit frameworks directly into your authority content hub, organic traffic converts into pre-sold discovery calls with zero sales friction.',
+    updatedAt: new Date().toISOString(),
+    readingTimeMinutes: 7,
+    relatedToolId: 'Enterprise ROI Calculator'
+  });
 
   if (!isProActive) {
     return (
@@ -89,34 +125,34 @@ export const RepurposingModal: React.FC<RepurposingModalProps> = ({
     setTimeout(() => setCopiedKey(null), 1500);
   };
 
-  const brand = workspace.brandProfile.name;
-  const persona = workspace.audienceProfile.targetPersona;
+  const brand = effectiveWorkspace.brandProfile.name;
+  const persona = effectiveWorkspace.audienceProfile.targetPersona;
 
-  const pdfGuideText = `# ${asset.title}\n*Official Comprehensive Implementation Blueprint*\nPublished by ${brand} for ${persona}\n\n## Executive Summary\n${asset.excerpt}\n\n## Strategic Framework\n${asset.body}\n\n---\n**Action Checklist:**\n1. Audit current specifications against target parameters.\n2. Leverage the companion decision engine: ${asset.relatedToolId || 'Interactive Decision Engine'}.\n3. Download the full resource kit at ${workspace.publishedUrl || 'https://authoritystudio.app'}.\n\n© ${new Date().getFullYear()} ${brand}. All Rights Reserved.`;
+  const pdfGuideText = `# ${effectiveAsset.title}\n*Official Comprehensive Implementation Blueprint*\nPublished by ${brand} for ${persona}\n\n## Executive Summary\n${effectiveAsset.excerpt}\n\n## Strategic Framework\n${effectiveAsset.body}\n\n---\n**Action Checklist:**\n1. Audit current specifications against target parameters.\n2. Leverage the companion decision engine: ${effectiveAsset.relatedToolId || 'Interactive Decision Engine'}.\n3. Download the full resource kit at ${effectiveWorkspace.publishedUrl || 'https://authoritystudio.app'}.\n\n© ${new Date().getFullYear()} ${brand}. All Rights Reserved.`;
 
   const socialPosts = [
-    `1/5: Most people get "${asset.targetKeyword}" completely backwards. Here is the framework that actually works for ${persona} 👇`,
-    `2/5: The core mistake? Trying to solve it without understanding: "${asset.excerpt.substring(0, 120)}..."`,
+    `1/5: Most people get "${effectiveAsset.targetKeyword}" completely backwards. Here is the framework that actually works for ${persona} 👇`,
+    `2/5: The core mistake? Trying to solve it without understanding: "${effectiveAsset.excerpt.substring(0, 120)}..."`,
     `3/5: Key Rule: Look at the direct tradeoff between immediate output and compounding results. Real authority properties win by standardizing the workflow.`,
     `4/5: We built a dedicated Decision Engine inside ${brand} that computes these exact thresholds in under 10 seconds.`,
-    `5/5: Read our full in-depth review & grab the free blueprint: ${asset.title} at ${workspace.brandProfile.name}!`
+    `5/5: Read our full in-depth review & grab the free blueprint: ${effectiveAsset.title} at ${effectiveWorkspace.brandProfile.name}!`
   ];
 
   const carouselSlides = [
-    { slide: 1, title: asset.title, sub: `A 60-second diagnostic breakdown by ${brand}` },
-    { slide: 2, title: 'The Common Pitfall', sub: asset.excerpt },
+    { slide: 1, title: effectiveAsset.title, sub: `A 60-second diagnostic breakdown by ${brand}` },
+    { slide: 2, title: 'The Common Pitfall', sub: effectiveAsset.excerpt },
     { slide: 3, title: 'The 3 Non-Negotiable Rules', sub: 'Precision specs, verified trade benchmarks, and continuous operational review.' },
     { slide: 4, title: 'Pro Recommendation', sub: `Never deploy without checking the companion decision engine simulation.` },
     { slide: 5, title: 'Get the Free Checklist', sub: `Save this post and visit ${brand} for the full step-by-step breakdown.` }
   ];
 
   const videoScript = `[SCENE 1 - 0:00 - HOOK & CUE]
-Visual: Creator points to camera with high-contrast text overlay: "Stop guessing your ${asset.targetKeyword}."
+Visual: Creator points to camera with high-contrast text overlay: "Stop guessing your ${effectiveAsset.targetKeyword}."
 Audio Voiceover: "If you're a ${persona}, you are probably overpaying by at least 25% on this exact step."
 
 [SCENE 2 - 0:15 - THE PROBLEM]
 Visual: Screen recording showing messy spreadsheets or conflicting contractor bids.
-Audio Voiceover: "${asset.excerpt}"
+Audio Voiceover: "${effectiveAsset.excerpt}"
 
 [SCENE 3 - 0:35 - THE 3-STEP SOLUTION]
 Visual: Cut to live demonstration of the ${brand} Decision Engine. Sliders adjusting in real time.
@@ -126,23 +162,23 @@ Audio Voiceover: "Here's the 3-step blueprint we use at ${brand}: First, audit y
 Visual: Creator points to bio link / comment section.
 Audio Voiceover: "Tap the link in bio to run your numbers for free on our Decision Engine and download the 2026 playbook!"`;
 
-  const newsletterBroadcast = `Subject: The real truth about ${asset.targetKeyword}\nPreview: Why standard advice fails for ${persona}\n\nHi {{first_name}},\n\nOver the past month, we've reviewed dozens of approaches to ${asset.targetKeyword}.\n\nHere's what our verified data shows:\n\n${asset.excerpt}\n\nIn our newest benchmark breakdown: "${asset.title}", we walk through the exact mathematical models and real-world results.\n\n👉 Read the complete breakdown here: [Link]\n\nP.S. Don't forget to run your numbers through our companion Decision Engine!\n\nBest,\n${brand} Team`;
+  const newsletterBroadcast = `Subject: The real truth about ${effectiveAsset.targetKeyword}\nPreview: Why standard advice fails for ${persona}\n\nHi {{first_name}},\n\nOver the past month, we've reviewed dozens of approaches to ${effectiveAsset.targetKeyword}.\n\nHere's what our verified data shows:\n\n${effectiveAsset.excerpt}\n\nIn our newest benchmark breakdown: "${effectiveAsset.title}", we walk through the exact mathematical models and real-world results.\n\n👉 Read the complete breakdown here: [Link]\n\nP.S. Don't forget to run your numbers through our companion Decision Engine!\n\nBest,\n${brand} Team`;
 
-  const pinterestText = `Pin Title: The Ultimate ${asset.targetKeyword} Blueprint for ${persona}\nPin Description: Learn how to execute ${asset.targetKeyword} with precision. Get the step-by-step framework, comparison data, and companion Decision Engines at ${brand}.\nHashtags: #${asset.targetKeyword.replace(/[^a-zA-Z0-9]/g, '')} #${brand.replace(/[^a-zA-Z0-9]/g, '')} #AuthorityGuide`;
+  const pinterestText = `Pin Title: The Ultimate ${effectiveAsset.targetKeyword} Blueprint for ${persona}\nPin Description: Learn how to execute ${effectiveAsset.targetKeyword} with precision. Get the step-by-step framework, comparison data, and companion Decision Engines at ${brand}.\nHashtags: #${effectiveAsset.targetKeyword.replace(/[^a-zA-Z0-9]/g, '')} #${brand.replace(/[^a-zA-Z0-9]/g, '')} #AuthorityGuide`;
 
   const paidAdSuite = `=== FACEBOOK / INSTAGRAM FEED AD COPY ===
 Primary Text:
-Planning a ${asset.targetKeyword} project? Don't sign a single contract or spend a dime until you run your numbers through our free Decision Engine.
+Planning a ${effectiveAsset.targetKeyword} project? Don't sign a single contract or spend a dime until you run your numbers through our free Decision Engine.
 
 Most quotes secretly bake in 30% padding. Our free tool gives you the exact raw materials vs. labor breakdown in 10 seconds.
 
-Headline: Free 2026 ${asset.targetKeyword} Decision Engine
+Headline: Free 2026 ${effectiveAsset.targetKeyword} Decision Engine
 Newsfeed Description: Verified trade math • 100% Client-side privacy • Zero email gate.
 Call to Action: Try Tool / Learn More
 
 === GOOGLE SEARCH ADS (RESPONSIVE AD PACK) ===
 Headlines (30 char max):
-- 2026 ${asset.targetKeyword.substring(0, 20)}
+- 2026 ${effectiveAsset.targetKeyword.substring(0, 20)}
 - Free Project Decision Engine
 - Verified Cost & Materials
 - Accurate Trade Estimates
@@ -175,8 +211,8 @@ Descriptions (90 char max):
 
         {/* Source Asset Indicator */}
         <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 flex items-center justify-between">
-          <span className="truncate"><strong>Source Guide:</strong> {asset.title}</span>
-          <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded font-bold uppercase">{asset.category}</span>
+          <span className="truncate"><strong>Source Guide:</strong> {effectiveAsset.title}</span>
+          <span className="text-[10px] font-mono text-blue-600 bg-blue-50 px-2 py-0.5 rounded font-bold uppercase">{effectiveAsset.category}</span>
         </div>
 
         {/* Format Selector Pills */}
@@ -392,7 +428,7 @@ Descriptions (90 char max):
             <span>Where do these repurposed assets go?</span>
           </div>
           <p className="text-[11px] text-blue-900/90 leading-relaxed">
-            All 7 formats are generated from <strong>"{asset.title}"</strong> and prepared for 1-click clipboard copy. Paste directly into LinkedIn, Twitter/X, Substack, Canva, or Meta Ads Manager. The original source article remains preserved in your <strong>Content Library</strong>.
+            All 7 formats are generated from <strong>"{effectiveAsset.title}"</strong> and prepared for 1-click clipboard copy. Paste directly into LinkedIn, Twitter/X, Substack, Canva, or Meta Ads Manager. The original source article remains preserved in your <strong>Content Library</strong>.
           </p>
         </div>
 

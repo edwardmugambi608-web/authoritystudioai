@@ -116,40 +116,40 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   if (activeSuite === 'CORE') {
     primaryNavItems = [
-      { id: 'dashboard', label: 'Master Business Overview', icon: LayoutDashboard },
+      { id: 'dashboard', label: 'Executive Dashboard', icon: LayoutDashboard },
       { id: 'niches', label: 'Select Niche Market', icon: Compass },
       { id: 'website', label: 'Preview Authority Website', icon: Globe },
       { id: 'tools', label: 'Interactive AI Tools', icon: Cpu },
       { id: 'content', label: 'Publish Authority Articles', icon: FileText },
-      { id: 'lead_magnet', label: 'Capture Lead Funnel', icon: Mail },
-      { id: 'exports', label: 'Export Business Files', icon: Download }
+      { id: 'lead_magnet', label: 'Lead Capture Funnels', icon: Mail },
+      { id: 'exports', label: 'Business-in-a-Box Export', icon: Download }
     ];
   } else if (activeSuite === 'EXTENDED') {
     primaryNavItems = [
-      { id: 'operations', label: 'Connect Custom Domain', icon: Radio },
-      { id: 'website', label: 'Publish Live Website', icon: Globe },
-      { id: 'monetization', label: 'Route Affiliate Offers', icon: DollarSign },
-      { id: 'launch_plan', label: 'Execute Launch Roadmap', icon: Calendar },
-      { id: 'tools', label: 'Monetize AI Tools', icon: Cpu },
-      { id: 'dashboard', label: 'Return Home Hub', icon: LayoutDashboard }
+      { id: 'operations', label: 'Custom Domain & DNS', icon: Radio },
+      { id: 'website', label: 'Live Cloud Publishing', icon: Globe },
+      { id: 'monetization', label: 'Affiliate Route Engine', icon: DollarSign },
+      { id: 'launch_plan', label: '7-Day Launch Roadmap', icon: Calendar },
+      { id: 'tools', label: 'Tool Paywall Licenses', icon: Cpu },
+      { id: 'dashboard', label: 'Executive Dashboard', icon: LayoutDashboard }
     ];
   } else if (activeSuite === 'PRO') {
     primaryNavItems = [
-      { id: 'portfolio', label: 'Manage All Businesses', icon: Layers },
-      { id: 'cloner', label: 'Clone Turnkey Business', icon: Repeat },
-      { id: 'repurposing', label: 'Repurpose Viral Content', icon: Share2 },
-      { id: 'exports', label: 'Bulk Export Files', icon: Download },
-      { id: 'dashboard', label: 'Return Home Hub', icon: LayoutDashboard }
+      { id: 'portfolio', label: '10-Business Portfolio', icon: Layers },
+      { id: 'cloner', label: '1-Click Business Cloner', icon: Repeat },
+      { id: 'repurposing', label: '1-into-7 Viral Repurposing', icon: Share2 },
+      { id: 'portfolio', label: 'Bulk Multi-ZIP Exporter', icon: Download },
+      { id: 'dashboard', label: 'Executive Dashboard', icon: LayoutDashboard }
     ];
   } else {
     // ULTIMATE
     primaryNavItems = [
-      { id: 'commercial', label: 'Scale Agency Empire', icon: Building2 },
-      { id: 'client_portals', label: 'Review Client Portals', icon: Users },
-      { id: 'niches', label: 'Unlock Master Vault', icon: Compass },
-      { id: 'license', label: 'Verify Agency Certificate', icon: Award },
-      { id: 'local_event', label: 'Deploy Local Kits', icon: MapPin },
-      { id: 'dashboard', label: 'Return Home Hub', icon: LayoutDashboard }
+      { id: 'commercial', label: 'Commercial Agency Suite', icon: Building2 },
+      { id: 'client_portals', label: 'Branded Client Portals', icon: Users },
+      { id: 'license', label: 'Official Agency Certificate', icon: Award },
+      { id: 'local_event', label: 'Local & Event Packages', icon: MapPin },
+      { id: 'niches', label: '24-Niche Master Vault', icon: Compass },
+      { id: 'dashboard', label: 'Executive Dashboard', icon: LayoutDashboard }
     ];
   }
 

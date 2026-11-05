@@ -21,6 +21,7 @@ import { BusinessWorkspace, PlanTier } from '../types/authority';
 import { store, PLAN_CONFIGS } from '../services/store';
 import { allNichePackages } from '../data/niches';
 import confetti from 'canvas-confetti';
+import JSZip from 'jszip';
 
 interface PortfolioTabProps {
   currentPlan: PlanTier;
@@ -132,28 +133,98 @@ export const PortfolioTab: React.FC<PortfolioTabProps> = ({
     }
   };
 
-  const handleBulkExport = () => {
-    const bundle = {
-      exportTimestamp: new Date().toISOString(),
-      portfolioCount: workspaces.length,
-      properties: workspaces.map(w => ({
-        id: w.id,
-        name: w.name,
-        niche: w.nichePackageId,
-        toolsCount: w.tools.length,
-        contentCount: w.contentAssets.length,
-        brand: w.brandProfile
-      }))
-    };
-    const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `authority-portfolio-master-export-${workspaces.length}-businesses.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    setBulkExportNotice(`Master export for all ${workspaces.length} businesses downloaded!`);
-    setTimeout(() => setBulkExportNotice(null), 3500);
+  const [isExportingZip, setIsExportingZip] = useState(false);
+
+  const handleBulkExport = async () => {
+    setIsExportingZip(true);
+    try {
+      const zip = new JSZip();
+
+      // Master manifest
+      const masterManifest = {
+        exportTimestamp: new Date().toISOString(),
+        edition: 'Authority Studio AI — Expansion Studio Pro Portfolio Archive',
+        portfolioCount: workspaces.length,
+        entitlementLimit: entitlement.maxWorkspaces,
+        businesses: workspaces.map(w => ({
+          id: w.id,
+          name: w.name,
+          niche: w.nichePackageId,
+          domain: w.customDomain || `${w.nichePackageId}.authoritystudio.app`,
+          toolsCount: w.tools.length,
+          contentCount: w.contentAssets.length
+        }))
+      };
+      zip.file('portfolio-manifest.json', JSON.stringify(masterManifest, null, 2));
+
+      // README for buyers / clients
+      const readme = `# Master Authority Business Portfolio Export
+Exported on: ${new Date().toLocaleDateString()}
+Total Autonomous Businesses: ${workspaces.length}
+
+Each business directory in this archive contains:
+- brand-profile.json: Color palette, typography, positioning & audience profiles.
+- interactive-tools.json: Calculation engines, formulas, input/output schemas.
+- content-library.md: Full SEO articles, buying guides, and comparison reviews.
+- traffic-repurposing.md: Multi-channel viral distribution scripts (LinkedIn, Twitter, Video, Newsletter).
+
+Authorized under Authority Studio AI Commercial License.
+`;
+      zip.file('README.md', readme);
+
+      // Add each business workspace folder
+      workspaces.forEach((w, idx) => {
+        const folderName = `${idx + 1}-${w.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+        const folder = zip.folder(folderName);
+        if (!folder) return;
+
+        folder.file('business-profile.json', JSON.stringify({
+          id: w.id,
+          name: w.name,
+          nichePackageId: w.nichePackageId,
+          customDomain: w.customDomain,
+          brandProfile: w.brandProfile,
+          audienceProfile: w.audienceProfile
+        }, null, 2));
+
+        // Format articles markdown
+        const articlesMd = `# Content Library & Editorial Blueprint: ${w.name}\n\n` +
+          w.contentAssets.map(a => `## ${a.title}\n**Category:** ${a.category} | **Target Keyword:** ${a.targetKeyword} | **Read Time:** ${a.readingTimeMinutes} min\n\n### Excerpt\n${a.excerpt}\n\n### Article Content\n${a.body}\n\n---\n`).join('\n');
+        folder.file('content-articles.md', articlesMd);
+
+        // Format tools
+        folder.file('interactive-tools.json', JSON.stringify(w.tools, null, 2));
+
+        // Repurposing suite
+        const repurposeMd = `# Multi-Channel Viral Traffic Suite: ${w.name}\n\n` +
+          `## 1. LinkedIn & Twitter Authority Thread\n` +
+          `1/5: Most operators in ${w.name} make one fatal assumption about ${w.audienceProfile.targetPersona}...\n` +
+          `2/5: Stop relying on generic advice. Use verified benchmarks and interactive calculators.\n` +
+          `3/5: We deployed an interactive decision engine at ${w.customDomain || 'our authority hub'} to automate this in seconds.\n\n` +
+          `## 2. 60-Second Short-Form Video Script (Reels/TikTok/Shorts)\n` +
+          `[HOOK] "Stop overpaying for your project without checking this first."\n` +
+          `[PROBLEM] "Here is why 80% of quotes have hidden margins."\n` +
+          `[SOLUTION] "Run your numbers on our free interactive decision tool."\n`;
+        folder.file('traffic-repurposing.md', repurposeMd);
+      });
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `authority-portfolio-master-export-${workspaces.length}-businesses.zip`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      confetti({ particleCount: 75, spread: 65, origin: { y: 0.6 } });
+      setBulkExportNotice(`Master ZIP Archive compiled & downloaded (${workspaces.length} businesses)!`);
+      setTimeout(() => setBulkExportNotice(null), 4000);
+    } catch (err) {
+      console.error(err);
+      setBulkExportNotice('Failed to generate ZIP archive.');
+    } finally {
+      setIsExportingZip(false);
+    }
   };
 
   const filteredWorkspaces = workspaces.filter(w => 
@@ -178,10 +249,11 @@ export const PortfolioTab: React.FC<PortfolioTabProps> = ({
         <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
           <button
             onClick={handleBulkExport}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors whitespace-nowrap"
+            disabled={isExportingZip}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 disabled:opacity-50 rounded-lg transition-colors whitespace-nowrap cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Bulk Portfolio Export</span>
+            <span>{isExportingZip ? 'Compiling Master ZIP...' : 'Bulk Portfolio Export (Master ZIP)'}</span>
           </button>
           <button
             onClick={onOpenCreateModal}

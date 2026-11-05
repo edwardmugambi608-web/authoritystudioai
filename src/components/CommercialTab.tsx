@@ -26,7 +26,7 @@ import confetti from 'canvas-confetti';
 
 interface CommercialTabProps {
   currentPlan: PlanTier;
-  activeWorkspace: BusinessWorkspace;
+  activeWorkspace?: BusinessWorkspace | null;
   initialSubSection?: 'clients' | 'license' | 'proposals' | 'local_package' | 'event_package';
 }
 
@@ -38,6 +38,27 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
   const entitlement = PLAN_CONFIGS[currentPlan];
   const clientWorkspaces = store.getClientWorkspaces();
   const auditLogs = store.getAuditLogs();
+
+  const effectiveWs = activeWorkspace || store.getActiveWorkspace() || store.getWorkspaces()[0] || {
+    id: 'ws-demo',
+    name: 'Authority Media Agency',
+    nichePackageId: 'high-ticket-consulting',
+    brandProfile: {
+      name: 'Authority Agency Network',
+      tagline: 'Enterprise B2B Authority Platforms & Interactive Decision Systems',
+      primaryColor: '#2563eb',
+      accentColor: '#f59e0b'
+    },
+    tools: [
+      { id: 'tool-1', name: 'ROI Decision Engine' },
+      { id: 'tool-2', name: 'Interactive Pricing Matrix' },
+      { id: 'tool-3', name: 'Project Scope Benchmark' }
+    ],
+    contentAssets: [
+      { id: 'art-1', title: 'The High-Ticket Agency Acquisition System' },
+      { id: 'art-2', title: 'Enterprise Retainer Pricing Playbook' }
+    ]
+  };
 
   const [activeSubSection, setActiveSubSection] = useState<'clients' | 'license' | 'proposals' | 'local_package' | 'event_package'>(initialSubSection || 'clients');
 
@@ -83,8 +104,8 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
           clientName: proposalClientName.trim(),
           metro: proposalMetro.trim(),
           businessContext: {
-            niche: activeWorkspace.nichePackageId,
-            brandName: activeWorkspace.brandProfile.name
+            niche: effectiveWs.nichePackageId,
+            brandName: effectiveWs.brandProfile.name
           }
         })
       });
@@ -104,7 +125,7 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
     e.preventDefault();
     if (!clientName || !clientEmail) return;
 
-    store.addClientWorkspace(clientName, clientEmail, companyName || clientName, activeWorkspace.id);
+    store.addClientWorkspace(clientName, clientEmail, companyName || clientName, effectiveWs.id);
     setInviteModalOpen(false);
     setClientName('');
     setClientEmail('');
@@ -141,8 +162,8 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
   <h1>Official Commercial Agency License</h1>
   <div class="sub">Authority Studio AI Commercial Empire Edition</div>
   <div class="box">
-    <strong>Licensee Organization:</strong> ${activeWorkspace.brandProfile.name} Enterprise Agency<br>
-    <strong>Certified Business:</strong> ${activeWorkspace.name} (${activeWorkspace.nichePackageId})<br>
+    <strong>Licensee Organization:</strong> ${effectiveWs.brandProfile.name} Enterprise Agency<br>
+    <strong>Certified Business:</strong> ${effectiveWs.name} (${effectiveWs.nichePackageId})<br>
     <strong>Certificate Serial:</strong> AUTH-COMM-${Date.now().toString(36).toUpperCase()}<br>
     <strong>Issuance Date:</strong> ${new Date().toLocaleDateString()}
   </div>
@@ -165,7 +186,7 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${activeWorkspace.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-commercial-license.html`;
+    a.download = `${effectiveWs.brandProfile.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-commercial-license.html`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -324,7 +345,7 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
                         <div className="text-[11px] text-slate-500">{client.companyName} • {client.clientEmail}</div>
                       </td>
                       <td className="py-3 px-3 font-medium text-slate-700">
-                        {activeWorkspace.name}
+                        {effectiveWs.name}
                       </td>
                       <td className="py-3 px-3">
                         <span className="text-[10px] px-2 py-0.5 rounded font-mono font-bold bg-amber-50 text-amber-800">
@@ -413,7 +434,7 @@ export const CommercialTab: React.FC<CommercialTabProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs bg-white p-4 rounded-xl border border-slate-200">
               <div>
                 <span className="text-[10px] font-bold text-slate-400 block uppercase">Authorized Licensee</span>
-                <span className="font-bold text-slate-900">{activeWorkspace.brandProfile.name} Agency Group</span>
+                <span className="font-bold text-slate-900">{effectiveWs.brandProfile.name} Agency Group</span>
               </div>
               <div>
                 <span className="text-[10px] font-bold text-slate-400 block uppercase">Certificate Serial</span>
@@ -933,7 +954,7 @@ Ongoing Scope of Services:
 
             <div className="space-y-4 text-xs">
               <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-                <div className="font-bold text-slate-900">Property Delivery Package: {activeWorkspace.name}</div>
+                <div className="font-bold text-slate-900">Property Delivery Package: {effectiveWs.name}</div>
                 <div className="text-slate-600">
                   Ready for client sign-off. Vendor branding has been completely removed.
                 </div>
@@ -943,11 +964,11 @@ Ongoing Scope of Services:
                 <div className="font-bold text-slate-800">Delivered Assets for Review:</div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 border rounded-lg bg-white">
-                    <div className="font-bold text-slate-900">{activeWorkspace.tools.length} Micro-Tools</div>
+                    <div className="font-bold text-slate-900">{effectiveWs.tools.length} Micro-Tools</div>
                     <div className="text-slate-500 text-[11px]">Deterministic calculations verified</div>
                   </div>
                   <div className="p-3 border rounded-lg bg-white">
-                    <div className="font-bold text-slate-900">{activeWorkspace.contentAssets.length} Guides & Reviews</div>
+                    <div className="font-bold text-slate-900">{effectiveWs.contentAssets.length} Guides & Reviews</div>
                     <div className="text-slate-500 text-[11px]">SEO meta and keywords included</div>
                   </div>
                 </div>
