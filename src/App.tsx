@@ -244,7 +244,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8fbff] via-white to-[#edf5ff] bg-ambient-light flex flex-col font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden w-full max-w-full">
+    <div className="min-h-screen bg-gradient-to-b from-[#f8fbff] via-white to-[#edf5ff] bg-ambient-light flex flex-col font-sans text-slate-900 antialiased selection:bg-blue-100 selection:text-blue-900 overflow-x-clip w-full max-w-full">
       
       {/* 3-Zone Top Bar */}
       <Header

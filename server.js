@@ -1,6 +1,7 @@
 // server.ts
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
@@ -1082,9 +1083,41 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static(path.resolve(__dirname, "dist")));
+    const distPath = path.resolve(__dirname, "dist");
+    const indexPath = path.resolve(distPath, "index.html");
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+    }
     app.get("*", (_req, res) => {
-      res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+      if (fs.existsSync(indexPath)) {
+        return res.sendFile(indexPath);
+      }
+      res.status(200).send(`
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <title>Authority Studio AI Server</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <style>
+              body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; padding: 20px; box-sizing: border-box; }
+              .card { background: #1e293b; padding: 36px; border-radius: 20px; border: 1px solid #334155; max-width: 520px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+              h1 { font-size: 22px; font-weight: 700; margin: 12px 0 8px 0; color: #38bdf8; }
+              p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 8px 0; }
+              .badge { display: inline-block; background: #0284c7; color: white; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+            </style>
+          </head>
+          <body>
+            <div class="card">
+              <div class="badge">Backend Active</div>
+              <h1>Authority Studio AI</h1>
+              <p>The Express backend engine is online and responding on port ${PORT}.</p>
+              <p>Frontend assets are compiling. Refresh in a few seconds once the build completes.</p>
+              <p style="font-size: 12px; color: #64748b; margin-top: 20px;">Health status: <a href="/api/health" style="color: #38bdf8; text-decoration: none;">/api/health</a></p>
+            </div>
+          </body>
+        </html>
+      `);
     });
   }
   app.listen(PORT, "0.0.0.0", () => {

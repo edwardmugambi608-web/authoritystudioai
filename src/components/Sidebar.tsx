@@ -349,8 +349,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      {/* Bottom of Sidebar: Clean User Identity & Sign Out (anchored at bottom) */}
-      <div className="pt-3 border-t border-slate-100 text-xs space-y-1 mt-auto">
+      {/* Bottom of Sidebar: Clean User Identity & Sign Out below Upgrade */}
+      <div className="pt-2 border-t border-slate-100 text-xs space-y-1 mt-2.5">
         <div className="flex items-center justify-between px-1 py-0.5 text-slate-700">
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px] shrink-0 shadow-xs">
@@ -385,8 +385,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      {/* Desktop Sidebar: Flows naturally with page content, scrolling in unison with dashboard */}
-      <aside className="hidden lg:flex flex-col justify-between w-72 shrink-0 border-r border-slate-200 bg-white p-3 sm:p-3.5 self-stretch">
+      {/* Desktop Docked Sidebar: Stays visible below top nav while dashboard scrolls */}
+      <aside className="hidden lg:flex flex-col justify-between w-72 shrink-0 border-r border-slate-200 bg-white sticky top-16 h-[calc(100vh-4rem)] p-3 sm:p-3.5 overflow-y-auto z-30">
         {renderNavBody(false)}
       </aside>
 
